@@ -12,7 +12,7 @@
 
 ## 🚀 Usage
 
-### Generate Password
+### Generate Password 🔒
 ```bash
 python web16.py
 ```
