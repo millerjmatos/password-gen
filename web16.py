@@ -2,55 +2,55 @@ import random
 import string
 
 
-def has_seq(password):
-    # Return True if there are two identical consecutive characters
+def has_consecutive_duplicates(password):
     for i in range(len(password) - 1):
         if password[i] == password[i + 1]:
             return True
     return False
 
 
-def has_ambiguous(password):
-    # Lookups in sets are faster than in strings.
+def has_ambiguous_chars(password):
+    # Membership tests in sets are faster than in strings.
     ambiguous_chars = set("0Oo1LlIi")
     return any(char in ambiguous_chars for char in password)
 
 
-def generate_password(length=16, num_count=3, special_count=3, max_attempts=100):
+def generate_password(length=16, num_digits=3, num_special=3, max_attempts=100):
     letters = string.ascii_letters
     digits = string.digits
     specials = "!@#$%^&*><"
 
     all_chars = letters
-    if special_count > 0:
+
+    if num_special > 0:
         all_chars += specials
-    if num_count > 0:
+    if num_digits > 0:
         all_chars += digits
 
-    if length < (num_count + special_count):
+    if length < (num_digits + num_special):
         raise ValueError(
-            "Password length too small or not enough space for numbers and special characters."
+            "Password length too small or not enough room for digits and special characters."
         )
 
     for _ in range(max_attempts):
-        pwd = []
-        pwd += random.choices(digits, k=num_count)
-        pwd += random.choices(specials, k=special_count)
-        pwd += random.choices(all_chars, k=length - num_count - special_count)
+        password = []
+        password += random.choices(digits, k=num_digits)
+        password += random.choices(specials, k=num_special)
+        password += random.choices(all_chars, k=length - num_digits - num_special)
 
-        random.shuffle(pwd)
-        shuffled = "".join(pwd)
+        random.shuffle(password)
+        shuffled_password = "".join(password)
 
-        if not has_seq(shuffled) and not has_ambiguous(shuffled):
-            return shuffled
+        if not has_consecutive_duplicates(shuffled_password) and not has_ambiguous_chars(shuffled_password):
+            return shuffled_password
 
     raise RuntimeError(
-        "Could not generate a password after the maximum number of attempts."
+        "Unable to generate a password after the maximum number of attempts."
     )
 
 
 try:
-    password = generate_password()
-    print("Password:", password)
+    pwd = generate_password()
+    print("Password:", pwd)
 except (ValueError, RuntimeError) as e:
     print("Error:", e)
