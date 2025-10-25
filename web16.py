@@ -2,56 +2,55 @@ import random
 import string
 
 
-def tem_seq(senha):
-    for i in range(len(senha) - 1):
-        if senha[i] == senha[i + 1]:
+def has_seq(password):
+    # Return True if there are two identical consecutive characters
+    for i in range(len(password) - 1):
+        if password[i] == password[i + 1]:
             return True
     return False
 
 
-def tem_ambiguos(senha):
-    caracteres_ambiguos = set(
-        "0Oo1LlIi"
-    )  # Buscas em conjuntos são mais rápidas do que em strings.
-    return any(char in caracteres_ambiguos for char in senha)
+def has_ambiguous(password):
+    # Lookups in sets are faster than in strings.
+    ambiguous_chars = set("0Oo1LlIi")
+    return any(char in ambiguous_chars for char in password)
 
 
-def gerar_senha(tamanho=16, qtd_numero=3, qtd_especial=3, tentativas_max=100):
-    letras = string.ascii_letters
-    numeros = string.digits
-    especiais = "!@#$%^&*><"
+def generate_password(length=16, num_count=3, special_count=3, max_attempts=100):
+    letters = string.ascii_letters
+    digits = string.digits
+    specials = "!@#$%^&*><"
 
-    todos_caracteres = letras
+    all_chars = letters
+    if special_count > 0:
+        all_chars += specials
+    if num_count > 0:
+        all_chars += digits
 
-    if qtd_especial > 0:
-        todos_caracteres += especiais
-    if qtd_numero > 0:
-        todos_caracteres += numeros
-
-    if tamanho < (qtd_numero + qtd_especial):
+    if length < (num_count + special_count):
         raise ValueError(
-            "Tamanho da senha muito pequeno ou não há espaço suficiente para números e caracteres especiais."
+            "Password length too small or not enough space for numbers and special characters."
         )
 
-    for _ in range(tentativas_max):
-        senha = []
-        senha += random.choices(numeros, k=qtd_numero)
-        senha += random.choices(especiais, k=qtd_especial)
-        senha += random.choices(todos_caracteres, k=tamanho - qtd_numero - qtd_especial)
+    for _ in range(max_attempts):
+        pwd = []
+        pwd += random.choices(digits, k=num_count)
+        pwd += random.choices(specials, k=special_count)
+        pwd += random.choices(all_chars, k=length - num_count - special_count)
 
-        random.shuffle(senha)
-        senha_embaralhada = "".join(senha)
+        random.shuffle(pwd)
+        shuffled = "".join(pwd)
 
-        if not tem_seq(senha_embaralhada) and not tem_ambiguos(senha_embaralhada):
-            return senha_embaralhada
+        if not has_seq(shuffled) and not has_ambiguous(shuffled):
+            return shuffled
 
     raise RuntimeError(
-        "Não foi possível gerar uma senha após o número máximo de tentativas."
+        "Could not generate a password after the maximum number of attempts."
     )
 
 
 try:
-    senha = gerar_senha()
-    print("Senha:", senha)
+    password = generate_password()
+    print("Password:", password)
 except (ValueError, RuntimeError) as e:
-    print("Erro:", e)
+    print("Error:", e)
