@@ -2,41 +2,41 @@ import random
 import string
 
 
-def gerar_senha(tamanho=96, qtd_numero=10, qtd_especial=10, tentativas_max=1000):
-    letras = string.ascii_letters
-    numeros = string.digits
-    especiais = "!@#$%^&*><"
+def generate_password(length=96, num_digits=10, num_special=10, max_attempts=1000):
+    letters = string.ascii_letters
+    digits = string.digits
+    specials = "!@#$%^&*><"
 
-    todos_caracteres = letras
+    all_chars = letters
 
-    if qtd_especial > 0:
-        todos_caracteres += especiais
-    if qtd_numero > 0:
-        todos_caracteres += numeros
+    if num_special > 0:
+        all_chars += specials
+    if num_digits > 0:
+        all_chars += digits
 
-    if tamanho < (qtd_numero + qtd_especial):
+    if length < (num_digits + num_special):
         raise ValueError(
-            "Tamanho da senha muito pequeno ou não há espaço suficiente para números e caracteres especiais."
+            "Password length too small or there is not enough space for digits and special characters."
         )
 
-    for _ in range(tentativas_max):
-        senha = []
-        senha += random.choices(numeros, k=qtd_numero)
-        senha += random.choices(especiais, k=qtd_especial)
-        senha += random.choices(todos_caracteres, k=tamanho - qtd_numero - qtd_especial)
+    for _ in range(max_attempts):
+        password = []
+        password += random.choices(digits, k=num_digits)
+        password += random.choices(specials, k=num_special)
+        password += random.choices(all_chars, k=length - num_digits - num_special)
 
-        random.shuffle(senha)
-        senha_embaralhada = "".join(senha)
+        random.shuffle(password)
+        shuffled_password = "".join(password)
 
-        return senha_embaralhada
+        return shuffled_password
 
     raise RuntimeError(
-        "Não foi possível gerar uma senha após o número máximo de tentativas."
+        "Could not generate a password after the maximum number of attempts."
     )
 
 
 try:
-    senha = gerar_senha()
-    print("Senha:", senha)
+    password = generate_password()
+    print("Password:", password)
 except (ValueError, RuntimeError) as e:
-    print("Erro:", e)
+    print("Error:", e)
