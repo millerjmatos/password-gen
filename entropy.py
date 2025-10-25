@@ -10,49 +10,49 @@ class PasswordEntropyCalculator:
         self.special = set("!@#$%^&*()_+-=[]{}|;:,.<>?")
 
     def get_charset_size(self, password: str) -> int:
-        """Calcula o tamanho do conjunto de caracteres usado na senha."""
+        """Calculate the size of the character set used by the password."""
         charset_size = 0
-        password_set = set(password)  # Converte a senha para um conjunto para maior eficiência
+        password_set = set(password)  # convert password to a set for efficiency
 
-        # Verifica cada tipo de caractere presente
+        # Check each character type presence
         if self.lowercase & password_set:
-            charset_size += len(self.lowercase)  # 26 caracteres
+            charset_size += len(self.lowercase)  # 26 characters
         if self.uppercase & password_set:
-            charset_size += len(self.uppercase)  # 26 caracteres
+            charset_size += len(self.uppercase)  # 26 characters
         if self.numbers & password_set:
-            charset_size += len(self.numbers)    # 10 caracteres
+            charset_size += len(self.numbers)    # 10 characters
         if self.special & password_set:
-            charset_size += len(self.special)    # caracteres especiais
+            charset_size += len(self.special)    # special characters
 
         return charset_size
 
     def calculate_entropy(self, password: str) -> float:
         """
-        Calcula a entropia da senha em bits.
-        Entropia = comprimento * log2(tamanho_do_conjunto_de_caracteres)
+        Calculate the password entropy in bits.
+        Entropy = length * log2(size_of_character_set)
         """
         if not password:
             return 0.0
-            
+
         charset_size = self.get_charset_size(password)
         if charset_size == 0:
             return 0.0
-            
+
         entropy = len(password) * math.log2(charset_size)
         return entropy
-    
+
     def evaluate_strength(self, entropy: float) -> str:
-        """Avalia a força da senha baseada na entropia."""
+        """Evaluate password strength based on entropy."""
         if entropy < 28:
-            return "Muito fraca"
+            return "Very weak"
         elif entropy < 36:
-            return "Fraca"
+            return "Weak"
         elif entropy < 60:
-            return "Razoável"
+            return "Reasonable"
         elif entropy < 128:
-            return "Forte"
+            return "Strong"
         else:
-            return "Muito forte"
+            return "Very strong"
 
     def has_lowercase(self, password: str) -> bool:
         return any(c in self.lowercase for c in password)
@@ -65,50 +65,47 @@ class PasswordEntropyCalculator:
 
     def has_special(self, password: str) -> bool:
         return any(c in self.special for c in password)
-    
-    def has_uppercase(self, password: str) -> bool:
-        return any(c in self.uppercase for c in password)
-    
+
     def count_special_characters(self, password: str) -> int:
-        """Conta a quantidade de caracteres especiais na senha."""
+        """Count how many special characters are in the password."""
         return sum(1 for c in password if c in self.special)
 
     def count_numbers(self, password: str) -> int:
-        """Conta a quantidade de números na senha."""
+        """Count how many digits are in the password."""
         return sum(1 for c in password if c in self.numbers)
 
 
 def main():
     calculator = PasswordEntropyCalculator()
-    
-    print("\n=== Calculadora de Entropia de Senha ===")
-    print("A entropia é uma medida da força da senha.")
-    print("Quanto maior a entropia, mais forte a senha.")
-    
+
+    print("\n=== Password Entropy Calculator ===")
+    print("Entropy is a measure of password strength.")
+    print("Higher entropy means a stronger password.")
+
     while True:
-        password = input("\nDigite a senha para análise (ou 'sair' para encerrar): ")
-        
-        if password.lower() == 'sair':
+        password = input("\nEnter the password to analyze (or 'exit' to quit): ")
+
+        if password.lower() == 'exit':
             break
-            
+
         entropy = calculator.calculate_entropy(password)
         strength = calculator.evaluate_strength(entropy)
         charset_size = calculator.get_charset_size(password)
         num_special = calculator.count_special_characters(password)
         num_numbers = calculator.count_numbers(password)
-        
-        print(f"\nAnálise da senha:")
-        print(f"- Comprimento: {len(password)} caracteres")
-        print(f"- Tamanho do conjunto de caracteres: {charset_size}")
-        print(f"- Entropia: {entropy:.1f} bits")
-        print(f"- Força: {strength}")
-        print(f"\nCaracterísticas:")
-        print(f"- Contém letras minúsculas: {'✓' if calculator.has_lowercase(password) else '✗'}")
-        print(f"- Contém letras maiúsculas: {'✓' if calculator.has_uppercase(password) else '✗'}")
-        print(f"- Contém números: {'✓' if calculator.has_numbers(password) else '✗'}")
-        print(f"- Quantidade de números: {num_numbers}")
-        print(f"- Contém caracteres especiais: {'✓' if calculator.has_special(password) else '✗'}")
-        print(f"- Quantidade de caracteres especiais: {num_special}")
+
+        print(f"\nPassword analysis:")
+        print(f"- Length: {len(password)} characters")
+        print(f"- Character set size: {charset_size}")
+        print(f"- Entropy: {entropy:.1f} bits")
+        print(f"- Strength: {strength}")
+        print(f"\nCharacteristics:")
+        print(f"- Contains lowercase letters: {'✓' if calculator.has_lowercase(password) else '✗'}")
+        print(f"- Contains uppercase letters: {'✓' if calculator.has_uppercase(password) else '✗'}")
+        print(f"- Contains numbers: {'✓' if calculator.has_numbers(password) else '✗'}")
+        print(f"- Number of digits: {num_numbers}")
+        print(f"- Contains special characters: {'✓' if calculator.has_special(password) else '✗'}")
+        print(f"- Number of special characters: {num_special}")
 
 
 if __name__ == "__main__":
