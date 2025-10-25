@@ -70,10 +70,10 @@ Characteristics:
 
 Modify generation parameters in any generator file:
 ```python
-senha = gerar_senha(
-    tamanho=16,        # Password length
-    qtd_numero=3,      # Minimum digits
-    qtd_especial=3     # Minimum special chars
+pwd = generate_password(
+    length=16,         # Password length
+    num_digits=3,      # Minimum digits
+    num_special=3      # Minimum special chars
 )
 ```
 
