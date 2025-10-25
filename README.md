@@ -30,21 +30,21 @@ python entropy.py
 **Interactive Session:**
 ```
 === Password Entropy Calculator ===
-Enter password for analysis: MyP@ssw0rd123
+Enter the password to analyze (or 'exit' to quit): MyP@ssw0rd123
 
-Password Analysis:
+Password analysis:
 - Length: 13 characters
-- Character set size: 72
-- Entropy: 79.8 bits
+- Character set size: 88
+- Entropy: 84.0 bits
 - Strength: Strong
 
 Characteristics:
 - Contains lowercase letters: ✓
 - Contains uppercase letters: ✓
 - Contains numbers: ✓
-- Number count: 3
+- Number of digits: 4
 - Contains special characters: ✓
-- Special character count: 1
+- Number of special characters: 1
 ```
 
 ## 🔧 Prerequisites
