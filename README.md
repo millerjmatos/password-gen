@@ -1,7 +1,7 @@
 # Password Generator & Entropy Calculator
 > Python toolkit for generating secure passwords and calculating entropy strength.
 
-## :: Features
+## Features
 
 - Multiple length options from 8 to 128 characters
 - Entropy calculation based on information theory
@@ -9,7 +9,7 @@
 - Ambiguous character exclusion and sequential repetition blocking
 - Interactive CLI with strength indicators
 
-## :: Usage
+## Usage
 
 1. Generate a password:
 ```bash
@@ -49,12 +49,12 @@ pwd = generate_password(
 )
 ```
 
-## :: Prerequisites
+## Prerequisites
 
 1. Python 3.6+
 2. Standard library only - no external dependencies required
 
-## :: Available Generators
+## Available Generators
 
 | File | Length | Use Case |
 |------|--------|----------|
