@@ -2,7 +2,7 @@ import random
 import string
 
 
-def generate_password(length=64, num_digits=9, num_special=9, max_attempts=1000):
+def generate_password(length=64, num_digits=8, num_special=8, max_attempts=100):
     letters = string.ascii_letters
     digits = string.digits
     specials = "!@#$%^&*><"

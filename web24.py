@@ -15,7 +15,7 @@ def has_ambiguous_chars(password):
     return any(char in ambiguous_chars for char in password)
 
 
-def generate_password(length=24, num_digits=5, num_special=5, max_attempts=100):
+def generate_password(length=24, num_digits=3, num_special=3, max_attempts=100):
     letters = string.ascii_letters
     digits = string.digits
     specials = "!@#$%^&*><"
