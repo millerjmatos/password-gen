@@ -68,7 +68,7 @@ pwd = generate_password(
 | `web128.py` | 128 chars | Enterprise-grade |
 | `entropy.py` | - | Strength analysis |
 
-## :: Entropy Reference
+## Entropy Reference
 
 | Entropy (bits) | Strength | Recommendation |
 |----------------|----------|----------------|
