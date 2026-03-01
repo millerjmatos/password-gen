@@ -7,7 +7,6 @@
 - Entropy calculation based on information theory
 - Control over digit and special character distribution
 - Ambiguous character exclusion and sequential repetition blocking
-- Interactive CLI with strength indicators
 
 ## Usage
 
